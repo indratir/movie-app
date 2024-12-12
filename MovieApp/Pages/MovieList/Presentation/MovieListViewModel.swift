@@ -17,9 +17,9 @@ final class MovieListViewModel: ObservableObject {
     private var isLoading: Bool = false
     private let defaultSearchKeyword: String = "marvel"
 
-    @Published var isNextPageAvailable: Bool = false
     @Published var movies: [MovieModel] = []
     @Published var state: MovieListState = .shimmer
+    @Published var paginationState: MovieListPaginationState = .loading
     @Published var keyword: String = ""
     @Published var isNetworkConnected: Bool = true
 
@@ -81,20 +81,28 @@ final class MovieListViewModel: ObservableObject {
             isLoading = true
             do {
                 let movies = try await movieUseCase.searchMovies(keyword: keyword, page: page)
-                if page == 1 {
-                    state = movies.isEmpty ? .empty : .items
-                }
-                self.movies += movies
-                self.isNextPageAvailable = !movies.isEmpty && state == .items
-            } catch {
-                if page == 1 {
-                    if !isNetworkConnected {
-                        state = .noInternet
+                await MainActor.run {
+                    if page == 1 {
+                        state = movies.isEmpty ? .empty : .items
+                    }
+                    self.movies += movies
+                    if !movies.isEmpty && state == .items {
+                        paginationState = .loading
                     } else {
-                        state = .error(error.localizedDescription)
+                        paginationState = .end
                     }
                 }
-                self.isNextPageAvailable = false
+            } catch {
+                await MainActor.run {
+                    if page == 1 {
+                        if !isNetworkConnected {
+                            state = .noInternet
+                        } else {
+                            state = .error(error.localizedDescription)
+                        }
+                    }
+                    paginationState = .error
+                }
             }
             isLoading = false
         }

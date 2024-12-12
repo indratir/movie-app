@@ -37,16 +37,7 @@ final class APIClientImpl: APIClient {
         }
 
         let (data, response) = try await urlSession.data(from: url)
-
-        guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
-            throw URLError(.badServerResponse)
-        }
-
-        guard 200 ..< 300 ~= statusCode else {
-            throw URLError(.badServerResponse)
-        }
-
-        if let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
+        if let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: data), let statusCode = (response as? HTTPURLResponse)?.statusCode {
             throw NSError(domain: errorResponse.error, code: statusCode)
         }
 

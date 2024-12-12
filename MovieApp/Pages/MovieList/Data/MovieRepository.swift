@@ -31,11 +31,11 @@ final class MovieRepositoryImpl: MovieRepository {
             }
             return movies
         } catch let error as NSError {
-            if let movies: MovieListResponse = movieCache.get(for: keyword) {
-                return movies
-            }
             if error.code == 200 {
                 return .init(search: [], totalResults: nil, response: nil)
+            }
+            if let movies: MovieListResponse = movieCache.get(for: keyword) {
+                return movies
             }
             throw error
         }

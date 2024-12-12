@@ -23,11 +23,19 @@ struct MovieListView: View {
                             MovieItemView(movie: movie)
                         }
 
-                        if viewModel.isNextPageAvailable {
+                        switch viewModel.paginationState {
+                        case .loading:
                             MovieItemShimmerView()
                                 .onAppear {
                                     viewModel.onScrollToBottom()
                                 }
+                        case .error:
+                            MovieItemPaginationErrorView()
+                                .onTapGesture {
+                                    viewModel.onReload()
+                                }
+                        case .end:
+                            EmptyView()
                         }
                     }
                 case .empty:

@@ -12,3 +12,9 @@ enum MovieListState: Equatable {
     case noInternet
     case error(String)
 }
+
+enum MovieListPaginationState: Equatable {
+    case loading
+    case end
+    case error
+}
