@@ -5,8 +5,8 @@
 //  Created by Indra Tirta Nugraha on 10/12/24.
 //
 
-struct MovieListResponse: Decodable {
-    struct Item: Decodable {
+struct MovieListResponse: Codable {
+    struct Item: Codable {
         let imdbID: String?
         let title: String?
         let year: String?
@@ -35,7 +35,7 @@ struct MovieListResponse: Decodable {
     func toMovieModels() -> [MovieModel] {
         search?.map {
             .init(
-                imdbID: $0.imdbID ?? "",
+                id: $0.imdbID ?? "",
                 title: $0.title ?? "",
                 year: $0.year ?? "",
                 type: $0.type ?? "",

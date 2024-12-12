@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieListView: View {
-    @State private var searchText: String = ""
+    private let shimmerCount: Int = 5
     @ObservedObject private var viewModel: MovieListViewModel = .init()
     
     var body: some View {
@@ -16,85 +16,80 @@ struct MovieListView: View {
             ZStack {
                 switch viewModel.state {
                 case .shimmer:
-                    List {
-                        ForEach(0..<10, id: \.self) { _ in
-                            MovieItemShimmerView()
-                        }
-                    }
+                    shimmerView()
                 case .items:
                     List {
-                        ForEach(viewModel.movies, id: \.imdbID) { movie in
+                        ForEach(viewModel.movies) { movie in
                             MovieItemView(movie: movie)
                         }
                         
                         if viewModel.isNextPageAvailable {
                             MovieItemShimmerView()
                                 .onAppear {
-                                    viewModel.fetchNextPage()
+                                    viewModel.onScrollToBottom()
                                 }
                         }
                     }
                 case .empty:
-                    ContentUnavailableView.search(text: viewModel.keyword)
+                    emptyView()
+                case .noInternet:
+                    noInternetView()
+                case .error(let message):
+                    errorView(message: message)
                 }
-                
             }
             .navigationTitle("Movie List")
+            .toolbar {
+                if !viewModel.isNetworkConnected {
+                    ProgressView()
+                }
+            }
         }
         .searchable(text: $viewModel.keyword)
         .onAppear {
-            viewModel.setupKeyword()
+            viewModel.onAppear()
         }
     }
-}
-
-struct MovieItemShimmerView: View {
-    var body: some View {
-        HStack(alignment: .top) {
-            ShimmerView()
-                .frame(width: 90, height: 120)
-                .cornerRadius(8)
-            
-            VStack(alignment: .leading, spacing: 16) {
-                ShimmerView()
-                    .frame(width: 160, height: 16)
-                    .cornerRadius(8)
-                
-                ShimmerView()
-                    .frame(width: 120, height: 12)
-                    .cornerRadius(8)
-            }
-        }
-    }
-}
-
-struct MovieItemView: View {
-    @State var movie: MovieModel
     
-    var body: some View {
-        HStack(alignment: .top) {
-            AsyncImage(url: .init(string: movie.poster)) { image in
-                image.image?.resizable()
-            }
-                .frame(width: 90, height: 120)
-                .cornerRadius(8)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text(movie.title)
-                    .font(.headline)
-                
-                Text(movie.year)
-                    .font(.subheadline)
-                    .foregroundStyle(Color(uiColor: .secondaryLabel))
+    private func shimmerView() -> some View {
+        List {
+            ForEach(0..<shimmerCount, id: \.self) { _ in
+                MovieItemShimmerView()
             }
         }
     }
-}
-
-enum MovieListState: Equatable {
-    case shimmer
-    case items
-    case empty
+    
+    private func emptyView() -> some View {
+        ContentUnavailableView.search(text: viewModel.keyword)
+    }
+    
+    private func noInternetView() -> some View {
+        ContentUnavailableView {
+            Label("No Internet Connection", systemImage: "wifi.slash")
+        } description: {
+            Text("Please check your internet connection")
+        } actions: {
+            Button {
+                viewModel.onReload()
+            } label: {
+                Label("Reload", systemImage: "arrow.clockwise")
+            }
+        }
+    }
+    
+    private func errorView(message: String) -> some View {
+        ContentUnavailableView {
+            Label("An error occurred", systemImage: "exclamationmark.triangle")
+        } description: {
+            Text(message)
+        } actions: {
+            Button {
+                viewModel.onReload()
+            } label: {
+                Label("Try again", systemImage: "arrow.clockwise")
+            }
+        }
+    }
 }
 
 #Preview {

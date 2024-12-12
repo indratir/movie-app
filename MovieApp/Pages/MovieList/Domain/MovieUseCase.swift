@@ -12,21 +12,13 @@ protocol MovieUseCase {
 }
 
 final class MovieUseCaseImpl: MovieUseCase {
-    private let movieService: MovieService
+    private let movieRepository: MovieRepository
     
-    init(movieService: MovieService = MovieServiceImpl()) {
-        self.movieService = movieService
+    init(movieRepository: MovieRepository = MovieRepositoryImpl()) {
+        self.movieRepository = movieRepository
     }
     
     func searchMovies(keyword: String, page: Int) async throws -> [MovieModel] {
-        do {
-            let response = try await movieService.searchMovies(keyword: keyword, page: page)
-            return response.toMovieModels()
-        } catch (let error as NSError) {
-            if error.code == 200 {
-                return []
-            }
-            throw error
-        }
+        try await movieRepository.fetchMovies(keyword: keyword, page: page).toMovieModels()
     }
 }
