@@ -1,16 +1,54 @@
 PODS:
+  - Cuckoo (1.10.4):
+    - Cuckoo/Swift (= 1.10.4)
+  - Cuckoo/Swift (1.10.4)
+  - CwlCatchException (2.2.1):
+    - CwlCatchExceptionSupport (~> 2.2.1)
+  - CwlCatchExceptionSupport (2.2.1)
+  - CwlMachBadInstructionHandler (2.2.2)
+  - CwlPosixPreconditionTesting (2.2.2)
+  - CwlPreconditionTesting (2.2.2):
+    - CwlCatchException (~> 2.2.1)
+    - CwlMachBadInstructionHandler (~> 2.2.2)
+    - CwlPosixPreconditionTesting (~> 2.2.2)
+  - Fakery (5.1.0)
+  - Nimble (13.6.2):
+    - CwlPreconditionTesting (~> 2.2.0)
+  - Quick (7.6.2)
   - SwiftLint (0.57.1)
 
 DEPENDENCIES:
+  - Cuckoo (= 1.10.4)
+  - Fakery
+  - Nimble
+  - Quick
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Cuckoo
+    - CwlCatchException
+    - CwlCatchExceptionSupport
+    - CwlMachBadInstructionHandler
+    - CwlPosixPreconditionTesting
+    - CwlPreconditionTesting
+    - Fakery
+    - Nimble
+    - Quick
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Cuckoo: 20b8aed94022e0e43e90f7c9e4fb0c86f0926a01
+  CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
+  CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
+  CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
+  CwlPosixPreconditionTesting: ecd095aa2129e740b44301c34571e8d85906fb88
+  CwlPreconditionTesting: 67a0047dd4de4382b93442c0e3f25207f984f35a
+  Fakery: a90caff00ca5cacde6c161c3eafc72314a03d34d
+  Nimble: 8cd9e713948ea6a61980e82d2bec937acec16b91
+  Quick: b8bec97cd4b9f21da0472d45580f763b801fc353
   SwiftLint: 92196976e597b9afec5dbe374810103e6c1d9d7c
 
-PODFILE CHECKSUM: 152941c9d3190aa43ce3db85ba0cc9991b9c731c
+PODFILE CHECKSUM: aae95bf7385a6a5655069815d04a3ee6f81b39dc
 
 COCOAPODS: 1.16.2

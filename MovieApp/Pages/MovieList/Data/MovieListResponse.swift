@@ -5,8 +5,8 @@
 //  Created by Indra Tirta Nugraha on 10/12/24.
 //
 
-struct MovieListResponse: Codable {
-    struct Item: Codable {
+struct MovieListResponse: Codable, Equatable {
+    struct Item: Codable, Equatable {
         let imdbID: String?
         let title: String?
         let year: String?

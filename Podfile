@@ -12,6 +12,10 @@ target 'MovieApp' do
   target 'MovieAppTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'Cuckoo', '1.10.4'
+    pod 'Nimble'
+    pod 'Quick'
+    pod 'Fakery'
   end
 
   target 'MovieAppUITests' do

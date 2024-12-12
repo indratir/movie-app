@@ -4,6 +4,7 @@
 ## Build generated
 build/
 DerivedData/
+MovieAppTests/GeneratedMocks.swift
 
 ## Various settings
 *.pbxuser

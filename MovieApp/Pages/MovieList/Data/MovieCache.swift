@@ -8,27 +8,28 @@
 import Foundation
 
 protocol MovieCache {
-    func set<T: Encodable>(response: T, for keyword: String)
-    func get<T: Decodable>(for keyword: String) -> T?
+    func set(response: MovieListResponse, for keyword: String)
+    func get(for keyword: String) -> MovieListResponse?
 }
 
 final class MovieCacheImpl: MovieCache {
-    private let userDefaults: UserDefaults
+    private let userDefaults: UserDefaultsProtocol
 
-    init(userDefaults: UserDefaults = .standard) {
+    init(userDefaults: UserDefaultsProtocol = UserDefaults.standard) {
         self.userDefaults = userDefaults
     }
 
-    func set<T: Encodable>(response: T, for keyword: String) {
+    func set(response: MovieListResponse, for keyword: String) {
         if let data = try? JSONEncoder().encode(response) {
             userDefaults.set(data, forKey: "movie-list:\(keyword)")
         }
     }
 
-    func get<T: Decodable>(for keyword: String) -> T? {
+    func get(for keyword: String) -> MovieListResponse? {
+        var result: MovieListResponse?
         if let data = userDefaults.data(forKey: "movie-list:\(keyword)") {
-            return try? JSONDecoder().decode(T.self, from: data)
+            result = try? JSONDecoder().decode(MovieListResponse.self, from: data)
         }
-        return nil
+        return result
     }
 }

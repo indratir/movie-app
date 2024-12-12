@@ -178,9 +178,11 @@
 			buildConfigurationList = 810D86962D0828530009ED04 /* Build configuration list for PBXNativeTarget "MovieAppTests" */;
 			buildPhases = (
 				D263B02053945E98EEDD09E2 /* [CP] Check Pods Manifest.lock */,
+				81835A422D0AE60900185B52 /* Generate Mocks */,
 				810D867B2D0828530009ED04 /* Sources */,
 				810D867C2D0828530009ED04 /* Frameworks */,
 				810D867D2D0828530009ED04 /* Resources */,
+				96B8D22BD07B78DDB15AB401 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -303,6 +305,46 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nSWIFTLINT_CMD=\"${PODS_ROOT}/SwiftLint/swiftlint\"\n\nif test -f \"$SWIFTLINT_CMD\" 2>&1\nthen\n    \"$SWIFTLINT_CMD\"\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+		};
+		81835A422D0AE60900185B52 /* Generate Mocks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/MovieApp/Pages/MovieList/Data/MovieCache.swift",
+				"$(SRCROOT)/MovieApp/Pages/MovieList/Data/MovieRepository.swift",
+				"$(SRCROOT)/MovieApp/Pages/MovieList/Data/MovieService.swift",
+				"$(SRCROOT)/MovieApp/Common/Extensions/UserDefaults+Extensions.swift",
+				"$(SRCROOT)/MovieApp/Utils/APIClient.swift",
+			);
+			name = "Generate Mocks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Define output file. Change \"$PROJECT_DIR/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"$PROJECT_DIR/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = $OUTPUT_FILE\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"MovieApp\" --no-class-mocking --no-timestamp --no-header --output \"${OUTPUT_FILE}\"\n";
+		};
+		96B8D22BD07B78DDB15AB401 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieAppTests/Pods-MovieAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieAppTests/Pods-MovieAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MovieAppTests/Pods-MovieAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		A9DCB0B184C05FC1146E094C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
