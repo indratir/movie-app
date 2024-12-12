@@ -1,0 +1,8 @@
+disabled_rules:
+  - nesting
+  - line_length
+  
+excluded:
+  - MovieAppTests/*
+  - MovieAppUITests/*
+  - Pods/*

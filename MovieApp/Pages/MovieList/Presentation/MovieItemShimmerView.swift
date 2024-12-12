@@ -13,12 +13,12 @@ struct MovieItemShimmerView: View {
             ShimmerView()
                 .frame(width: 90, height: 120)
                 .cornerRadius(8)
-            
+
             VStack(alignment: .leading, spacing: 16) {
                 ShimmerView()
                     .frame(width: 160, height: 16)
                     .cornerRadius(8)
-                
+
                 ShimmerView()
                     .frame(width: 120, height: 12)
                     .cornerRadius(8)

@@ -11,7 +11,7 @@ struct MovieModel: Identifiable {
     let year: String
     let type: String
     let poster: String
-    
+
 #if DEBUG
     static func mock() -> MovieModel {
         .init(

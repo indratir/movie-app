@@ -13,11 +13,11 @@ protocol MovieUseCase {
 
 final class MovieUseCaseImpl: MovieUseCase {
     private let movieRepository: MovieRepository
-    
+
     init(movieRepository: MovieRepository = MovieRepositoryImpl()) {
         self.movieRepository = movieRepository
     }
-    
+
     func searchMovies(keyword: String, page: Int) async throws -> [MovieModel] {
         try await movieRepository.fetchMovies(keyword: keyword, page: page).toMovieModels()
     }

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ShimmerView: View {
-    
+
     @State private var startPoint: UnitPoint = .init(x: -1, y: 0.5)
     @State private var endPoint: UnitPoint = .init(x: 0, y: 0.5)
-    
+
     private var gradientColors: [Color] = [.gray.opacity(0.4), .gray.opacity(0.2), .gray.opacity(0.4)]
-    
+
     var body: some View {
         LinearGradient(colors: gradientColors, startPoint: startPoint, endPoint: endPoint)
             .onAppear {

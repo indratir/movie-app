@@ -14,17 +14,17 @@ protocol MovieCache {
 
 final class MovieCacheImpl: MovieCache {
     private let userDefaults: UserDefaults
-    
+
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
     }
-    
+
     func set<T: Encodable>(response: T, for keyword: String) {
         if let data = try? JSONEncoder().encode(response) {
             userDefaults.set(data, forKey: "movie-list:\(keyword)")
         }
     }
-    
+
     func get<T: Decodable>(for keyword: String) -> T? {
         if let data = userDefaults.data(forKey: "movie-list:\(keyword)") {
             return try? JSONDecoder().decode(T.self, from: data)

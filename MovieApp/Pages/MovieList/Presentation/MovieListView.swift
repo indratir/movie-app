@@ -10,7 +10,7 @@ import SwiftUI
 struct MovieListView: View {
     private let shimmerCount: Int = 5
     @ObservedObject private var viewModel: MovieListViewModel = .init()
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -22,7 +22,7 @@ struct MovieListView: View {
                         ForEach(viewModel.movies) { movie in
                             MovieItemView(movie: movie)
                         }
-                        
+
                         if viewModel.isNextPageAvailable {
                             MovieItemShimmerView()
                                 .onAppear {
@@ -50,7 +50,7 @@ struct MovieListView: View {
             viewModel.onAppear()
         }
     }
-    
+
     private func shimmerView() -> some View {
         List {
             ForEach(0..<shimmerCount, id: \.self) { _ in
@@ -58,11 +58,11 @@ struct MovieListView: View {
             }
         }
     }
-    
+
     private func emptyView() -> some View {
         ContentUnavailableView.search(text: viewModel.keyword)
     }
-    
+
     private func noInternetView() -> some View {
         ContentUnavailableView {
             Label("No Internet Connection", systemImage: "wifi.slash")
@@ -76,7 +76,7 @@ struct MovieListView: View {
             }
         }
     }
-    
+
     private func errorView(message: String) -> some View {
         ContentUnavailableView {
             Label("An error occurred", systemImage: "exclamationmark.triangle")

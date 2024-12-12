@@ -16,11 +16,11 @@ protocol NetworkMonitor {
 final class NetworkMonitorImpl: NetworkMonitor {
     private let networkMonitor: NWPathMonitor
     private let queue: DispatchQueue = .init(label: "network-monitor")
-    
+
     init(networkMonitor: NWPathMonitor = .init()) {
         self.networkMonitor = networkMonitor
     }
-    
+
     func isConnected() -> AnyPublisher<Bool, Never> {
         Deferred {
             Future { [weak self] promise in
@@ -38,5 +38,3 @@ final class NetworkMonitorImpl: NetworkMonitor {
         .eraseToAnyPublisher()
     }
 }
-
-

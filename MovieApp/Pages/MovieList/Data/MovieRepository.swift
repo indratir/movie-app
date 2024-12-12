@@ -14,7 +14,7 @@ protocol MovieRepository {
 final class MovieRepositoryImpl: MovieRepository {
     private let movieCache: MovieCache
     private let movieService: MovieService
-    
+
     init(
         movieCache: MovieCache = MovieCacheImpl(),
         movieService: MovieService = MovieServiceImpl()
@@ -22,7 +22,7 @@ final class MovieRepositoryImpl: MovieRepository {
         self.movieCache = movieCache
         self.movieService = movieService
     }
-    
+
     func fetchMovies(keyword: String, page: Int) async throws -> MovieListResponse {
         do {
             let movies = try await movieService.searchMovies(keyword: keyword, page: page)
@@ -30,7 +30,7 @@ final class MovieRepositoryImpl: MovieRepository {
                 movieCache.set(response: movies, for: keyword)
             }
             return movies
-        } catch (let error as NSError) {
+        } catch let error as NSError {
             if let movies: MovieListResponse = movieCache.get(for: keyword) {
                 return movies
             }

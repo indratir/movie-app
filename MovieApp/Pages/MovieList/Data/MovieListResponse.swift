@@ -12,7 +12,7 @@ struct MovieListResponse: Codable {
         let year: String?
         let type: String?
         let poster: String?
-        
+
         private enum CodingKeys: String, CodingKey {
             case imdbID
             case title = "Title"
@@ -21,17 +21,17 @@ struct MovieListResponse: Codable {
             case poster = "Poster"
         }
     }
-    
+
     let search: [Item]?
     let totalResults: String?
     let response: String?
-    
+
     private enum CodingKeys: String, CodingKey {
         case totalResults
         case search = "Search"
         case response = "Response"
     }
-    
+
     func toMovieModels() -> [MovieModel] {
         search?.map {
             .init(

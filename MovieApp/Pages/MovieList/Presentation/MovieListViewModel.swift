@@ -11,18 +11,18 @@ import Combine
 final class MovieListViewModel: ObservableObject {
     private let movieUseCase: MovieUseCase
     private let networkMonitor: NetworkMonitor
-    
+
     private var cancellables: Set<AnyCancellable> = .init()
     private var page: Int = 1
     private var isLoading: Bool = false
     private let defaultSearchKeyword: String = "marvel"
-    
+
     @Published var isNextPageAvailable: Bool = false
     @Published var movies: [MovieModel] = []
     @Published var state: MovieListState = .shimmer
     @Published var keyword: String = ""
     @Published var isNetworkConnected: Bool = true
-    
+
     init(
         movieUseCase: MovieUseCase = MovieUseCaseImpl(),
         networkMonitor: NetworkMonitor = NetworkMonitorImpl()
@@ -30,25 +30,25 @@ final class MovieListViewModel: ObservableObject {
         self.movieUseCase = movieUseCase
         self.networkMonitor = networkMonitor
     }
-    
+
     func onAppear() {
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
-        
+
         setupKeyword()
         setupNetworkMonitor()
     }
-    
+
     func onReload() {
         searchMovies(keyword: keyword, page: page)
     }
-    
+
     func onScrollToBottom() {
         guard !isLoading else { return }
         page += 1
         searchMovies(keyword: keyword.isEmpty ? defaultSearchKeyword : keyword, page: page)
     }
-    
+
     private func setupKeyword() {
         $keyword
             .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
@@ -60,7 +60,7 @@ final class MovieListViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+
     private func setupNetworkMonitor() {
         networkMonitor.isConnected()
             .receive(on: DispatchQueue.main)
@@ -69,13 +69,13 @@ final class MovieListViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+
     private func resetState() {
         page = 1
         movies.removeAll()
         state = .shimmer
     }
-    
+
     private func searchMovies(keyword: String, page: Int) {
         Task {
             isLoading = true
