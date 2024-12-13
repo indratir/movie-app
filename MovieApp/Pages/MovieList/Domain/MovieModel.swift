@@ -5,7 +5,7 @@
 //  Created by Indra Tirta Nugraha on 10/12/24.
 //
 
-struct MovieModel: Identifiable {
+struct MovieModel: Identifiable, Equatable {
     let id: String
     let title: String
     let year: String
