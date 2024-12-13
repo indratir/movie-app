@@ -76,22 +76,3 @@ final class MovieCacheTests: QuickSpec {
         }
     }
 }
-
-extension MovieListResponse {
-    static func mock() -> Self {
-        let faker: Faker = .init()
-        return .init(
-            search: [
-                .init(
-                    imdbID: faker.lorem.word(),
-                    title: faker.lorem.sentence(),
-                    year: faker.lorem.word(),
-                    type: faker.lorem.word(),
-                    poster: faker.internet.image()
-                )
-            ],
-            totalResults: "1",
-            response: "Success"
-        )
-    }
-}

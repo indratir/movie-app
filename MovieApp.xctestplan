@@ -25,7 +25,7 @@
       }
     },
     {
-      "parallelizable" : true,
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:MovieApp.xcodeproj",
         "identifier" : "810D86882D0828530009ED04",

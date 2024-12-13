@@ -319,6 +319,8 @@
 				"$(SRCROOT)/MovieApp/Pages/MovieList/Data/MovieService.swift",
 				"$(SRCROOT)/MovieApp/Common/Extensions/UserDefaults+Extensions.swift",
 				"$(SRCROOT)/MovieApp/Utils/APIClient.swift",
+				"$(SRCROOT)/MovieApp/Pages/MovieList/Domain/MovieUseCase.swift",
+				"$(SRCROOT)/MovieApp/Utils/NetworkMonitor.swift",
 			);
 			name = "Generate Mocks";
 			outputFileListPaths = (
